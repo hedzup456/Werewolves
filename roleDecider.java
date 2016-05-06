@@ -46,14 +46,14 @@ public class roleDecider{
 
 		for (int i = 0; i < numberOfPlayers; i++){
 			String player = players[i];
+			boolean[] indexUsedArray = new boolean[numberOfPlayers];
 			roles[i][0] = player;
-			String role = "USED";
-			while (role == "USED"){
-				System.out.println("Role used, repeating for " + player);
+			boolean indexUsed = true;
+			while (indexUsed){
 				int randomIndex = random.nextInt(numberOfPlayers);
-				System.out.println(randomIndex);
-				role = rolesArray[randomIndex];
-				rolesArray[randomIndex] = "USED";
+				roles[i][1] = rolesArray[randomIndex];
+				indexUsed = indexUsedArray[randomIndex];
+				indexUsedArray[randomIndex] = true;
 			}
 		}
 		return roles;
