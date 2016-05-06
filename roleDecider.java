@@ -1,3 +1,4 @@
+package werewolves;
 import java.util.Random;
 
 public class roleDecider{
@@ -25,10 +26,12 @@ public class roleDecider{
 		rolesArray[numberOfWolves + 1] = "Trapper";
 		rolesArray[numberOfWolves + 2] = "Vigilante";
 		rolesArray[numberOfWolves + 3] = "Protector";
-
-		for (int i = numberOfWolves + 4; i < numberOfPlayers; i++){
-			rolesArray[i] = "Villager";
-		}
+		if (isLovers){
+			rolesArray[numberOfWolves + 4] = "Lover";
+			rolesArray[numberOfWolves + 5] = "Lover";
+			
+			for (int i = numberOfWolves + 6; i < numberOfPlayers; i++)	rolesArray[i] = "Villager";
+		} else for (int i = numberOfWolves + 4; i < numberOfPlayers; i++)	rolesArray[i] = "Villager";
 
 		return rolesArray;
 	}
@@ -43,23 +46,23 @@ public class roleDecider{
 		}
 		
 		String[] rolesArray = populateRolesArray(numberOfWolves, numberOfPlayers);
-
+		boolean[] usedArraySlots = new boolean[numberOfPlayers];
+		
 		for (int i = 0; i < numberOfPlayers; i++){
 			String player = players[i];
-			boolean[] indexUsedArray = new boolean[numberOfPlayers];
 			roles[i][0] = player;
-			boolean indexUsed = true;
-			while (indexUsed){
+			boolean usedRole = true;
+			while (usedRole){
 				int randomIndex = random.nextInt(numberOfPlayers);
 				roles[i][1] = rolesArray[randomIndex];
-				indexUsed = indexUsedArray[randomIndex];
-				indexUsedArray[randomIndex] = true;
+				usedRole = usedArraySlots[randomIndex];
+				usedArraySlots[randomIndex] = true;
 			}
 		}
 		return roles;
 	}
 	public static void main(String[] args){
-		String[] names = {"Richard", "Iman", "Ru", "Ellie", "Kajetan", "Willow", "A" , "B" , "C"};
+		String[] names = {"Richard", "Gus", "Ash", "Ben", "Brandon", "Chris", "Connor", "Dennis", "Ellie E", "Iman", "Ru", "Ellie OL", "Kajetan", "Willow", "Jake" , "Moo" , "Nicole", "Sonny", "Caitlin", "Niamh"};
 		roleDecider rd = new roleDecider(names);
 		
 		String[][] finalRoles = rd.decideRoles();
